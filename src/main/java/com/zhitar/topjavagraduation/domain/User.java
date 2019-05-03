@@ -1,15 +1,19 @@
 package com.zhitar.topjavagraduation.domain;
 
-import lombok.*;
+import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.annotations.BatchSize;
 import org.springframework.util.CollectionUtils;
 
 import javax.persistence.*;
-import java.util.*;
+import java.util.Date;
+import java.util.EnumSet;
+import java.util.HashSet;
+import java.util.Set;
 
 @Getter
 @Setter
-@ToString(callSuper = true, exclude = {"restaurants"})
+//@ToString(callSuper = true, exclude = {"restaurant"})
 @Entity
 @Table(name = "users", uniqueConstraints = {@UniqueConstraint(name = "users_unique_email_idx", columnNames = "email")})
 public class User extends AbstractBaseEntity {
@@ -54,7 +58,12 @@ public class User extends AbstractBaseEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "restaurant_id")
+//    @JsonIgnore
     private Restaurant restaurant;
+
+    public User(Long id, String name, String email, String password, Role role, Role... roles) {
+        this(id, name, email, password, true, new Date(), EnumSet.of(role, roles));
+    }
 
     public void setRoles(Set<Role> roles) {
         this.roles = CollectionUtils.isEmpty(roles) ? EnumSet.noneOf(Role.class) : EnumSet.copyOf(roles);

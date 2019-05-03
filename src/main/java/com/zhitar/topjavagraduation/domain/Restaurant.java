@@ -1,5 +1,7 @@
 package com.zhitar.topjavagraduation.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.springframework.util.CollectionUtils;
 
@@ -8,7 +10,7 @@ import java.util.*;
 
 @Getter
 @Setter
-@ToString
+//@ToString
 @Entity
 @Table(name = "restaurants")
 public class Restaurant extends AbstractBaseEntity {
@@ -33,6 +35,7 @@ public class Restaurant extends AbstractBaseEntity {
     private String name;
 
     @OneToMany(mappedBy = "restaurant")
+    @OrderBy("description ASC")
     private Set<Lunch> lunches = new HashSet<>();
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "restaurant")

@@ -10,6 +10,6 @@ public class UserDataUtil {
 
     private UserDataUtil() {}
 
-    public static final User USER = new User(null, "Tolik", "tolik@user.com", "123456", true, new Date(), EnumSet.of(Role.USER));
-    public static final User ADMIN = new User(null, "Admin", "admin@admin.com", "123456", true, new Date(), EnumSet.of(Role.ADMIN, Role.USER));
+    public static final User USER = new User(null, "Tolik", "tolik@user.com", "123456", true, new Date(), EnumSet.of(Role.ROLE_USER));
+    public static final User ADMIN = new User(null, "Admin", "admin@admin.com", "123456", true, new Date(), EnumSet.of(Role.ROLE_ADMIN, Role.ROLE_USER));
 }
