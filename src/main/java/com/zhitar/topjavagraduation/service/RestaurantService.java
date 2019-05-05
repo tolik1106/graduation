@@ -2,11 +2,15 @@ package com.zhitar.topjavagraduation.service;
 
 import com.zhitar.topjavagraduation.domain.Restaurant;
 import com.zhitar.topjavagraduation.repository.RestaurantRepository;
+import com.zhitar.topjavagraduation.to.RestaurantTo;
 import com.zhitar.topjavagraduation.util.exception.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 
 @Service
@@ -19,8 +23,8 @@ public class RestaurantService {
         return repository.getWithLunches(id);
     }
 
-    public List<Restaurant> findAll() {
-        return repository.findAll(Sort.by(Sort.Direction.ASC, "name"));
+    public List<RestaurantTo> findAll(Long userId) {
+        return repository.findAll(userId, LocalDate.now(), Sort.by(Sort.Direction.ASC, "name"));
     }
 
     public long count() {

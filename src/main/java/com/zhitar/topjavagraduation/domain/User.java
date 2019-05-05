@@ -18,23 +18,6 @@ import java.util.Set;
 @Table(name = "users", uniqueConstraints = {@UniqueConstraint(name = "users_unique_email_idx", columnNames = "email")})
 public class User extends AbstractBaseEntity {
 
-    public User() {
-    }
-
-    public User(User u) {
-        this(u.getId(), u.getName(), u.getEmail(), u.getPassword(), u.isEnabled(), u.getRegistered(), u.getRoles());
-    }
-
-    public User(Long id, String name, String email, String password, boolean enabled, Date registered, Set<Role> roles) {
-        super(id);
-        this.name = name;
-        this.email = email;
-        this.password = password;
-        this.enabled = enabled;
-        this.registered = registered;
-        this.roles = roles;
-    }
-
     private String name;
 
     @Column(nullable = false, unique = true)
@@ -56,10 +39,27 @@ public class User extends AbstractBaseEntity {
     @BatchSize(size = 50)
     private Set<Role> roles = new HashSet<>();
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "restaurant_id")
-//    @JsonIgnore
-    private Restaurant restaurant;
+    public User() {
+    }
+
+    public User(User u) {
+        this(u.getId(), u.getName(), u.getEmail(), u.getPassword(), u.isEnabled(), u.getRegistered(), u.getRoles());
+    }
+
+    public User(Long id, String name, String email, String password, boolean enabled, Date registered, Set<Role> roles) {
+        super(id);
+        this.name = name;
+        this.email = email;
+        this.password = password;
+        this.enabled = enabled;
+        this.registered = registered;
+        this.roles = roles;
+    }
+
+//
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "restaurant_id")
+//    private Restaurant restaurant;
 
     public User(Long id, String name, String email, String password, Role role, Role... roles) {
         this(id, name, email, password, true, new Date(), EnumSet.of(role, roles));

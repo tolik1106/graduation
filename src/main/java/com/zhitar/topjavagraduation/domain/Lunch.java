@@ -14,10 +14,10 @@ import java.math.BigDecimal;
 @Setter
 //@ToString
 @Entity
-@Table(name = "lunch_menu")
+@Table(name = "lunches")
 public class Lunch extends AbstractBaseEntity{
 
-    @Column(nullable = false, length = 128)
+    @Column(nullable = false)
     private String description;
 
     @Column(nullable = false)
