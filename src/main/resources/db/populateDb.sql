@@ -1,7 +1,7 @@
 DELETE FROM user_roles;
 DELETE FROM lunches;
-DELETE FROM restaurants;
 DELETE FROM votes;
+DELETE FROM restaurants;
 DELETE FROM users;
 
 ALTER SEQUENCE GLOBAL_SEQ RESTART WITH 10000;
@@ -45,3 +45,9 @@ INSERT INTO lunches (description, price, restaurant_id) VALUES
   ('Wine', 2.98, 10010),
   ('Bread', 0.27, 10010);
 
+INSERT INTO votes (voted_date, voted_time, restaurant_id, user_id) VALUES
+(now(), '09:15', 10010, 10000),
+(now(), '09:15', 10010, 10001),
+(now(), '09:15', 10010, 10002),
+(now(), '09:15', 10006, 10004),
+(now(), '09:15', 10006, 10005);

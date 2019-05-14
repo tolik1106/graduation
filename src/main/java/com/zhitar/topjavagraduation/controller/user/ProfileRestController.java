@@ -13,13 +13,14 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import javax.validation.Valid;
 import java.net.URI;
 
 @RestController
 @RequestMapping(ProfileRestController.REST_PROFILE_URL)
 public class ProfileRestController {
 
-    static final String REST_PROFILE_URL = "/rest/profile/";
+    public static final String REST_PROFILE_URL = "/rest/profile/";
 
     @Autowired
     private UserService service;
@@ -31,7 +32,7 @@ public class ProfileRestController {
 
     @PostMapping(value = "/register")
     @ResponseStatus(value = HttpStatus.CREATED)
-    public ResponseEntity<UserTo> register(@RequestBody UserTo userTo) {
+    public ResponseEntity<UserTo> register(@Valid @RequestBody UserTo userTo) {
         User created = service.save(UserUtil.createNewFromTo(userTo));
         URI uriOfNewResource = ServletUriComponentsBuilder.fromCurrentContextPath()
                 .path(REST_PROFILE_URL + "/{id}")
@@ -41,7 +42,7 @@ public class ProfileRestController {
 
     @PutMapping
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void update(@RequestBody UserTo userTo, @AuthenticationPrincipal AuthorizedUser authorizedUser) {
+    public void update(@Valid @RequestBody UserTo userTo, @AuthenticationPrincipal AuthorizedUser authorizedUser) {
         ValidationUtil.assureIdConsistent(userTo, authorizedUser.getId());
         service.update(userTo);
     }

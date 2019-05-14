@@ -12,9 +12,10 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/rest/profile/restaurants")
+@RequestMapping(ProfileRestaurantRestController.REST_PROFILE_RESTAURANTS_URL)
 public class ProfileRestaurantRestController {
 
+    static final String REST_PROFILE_RESTAURANTS_URL = "/rest/profile/restaurants";
     @Autowired
     private RestaurantService service;
 

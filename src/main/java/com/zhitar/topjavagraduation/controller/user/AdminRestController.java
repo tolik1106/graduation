@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 import static com.zhitar.topjavagraduation.util.UserUtil.createNewFromTo;
@@ -15,7 +16,7 @@ import static com.zhitar.topjavagraduation.util.UserUtil.createNewFromTo;
 @RequestMapping(AdminRestController.REST_URL)
 public class AdminRestController {
 
-    static final String REST_URL = "/rest/admin/users";
+    public static final String REST_URL = "/rest/admin/users";
 
     @Autowired
     private UserService service;
@@ -31,7 +32,7 @@ public class AdminRestController {
     }
 
     @PostMapping
-    public void createOrUpdate(@RequestBody UserTo userTo) {
+    public void createOrUpdate(@Valid @RequestBody UserTo userTo) {
         if (userTo.isNew()) {
             service.save(createNewFromTo(userTo));
         } else {

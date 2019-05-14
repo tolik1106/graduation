@@ -10,9 +10,9 @@ CREATE SEQUENCE GLOBAL_SEQ START WITH 10000;
 
 CREATE TABLE users (
   id BIGINT DEFAULT GLOBAL_SEQ.nextval PRIMARY KEY,
-  name VARCHAR(255) NOT NULL,
+  name VARCHAR(64) NOT NULL,
   email VARCHAR(255) NOT NULL,
-  password VARCHAR(255) NOT NULL,
+  password VARCHAR(128) NOT NULL,
   registered TIMESTAMP DEFAULT now(),
   enabled BOOLEAN DEFAULT TRUE
 );
@@ -46,7 +46,7 @@ CREATE TABLE votes (
   voted_time TIME NOT NULL,
   restaurant_id BIGINT NOT NULL,
   user_id BIGINT NOT NULL,
-  FOREIGN KEY (restaurant_id) REFERENCES restaurants(id),
-  FOREIGN KEY (user_id) REFERENCES users(id)
+  FOREIGN KEY (restaurant_id) REFERENCES restaurants(id) ON DELETE CASCADE,
+  FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
 );
 CREATE UNIQUE INDEX votes_unique_user_date_idx ON votes (user_id, voted_date);

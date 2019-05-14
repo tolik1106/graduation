@@ -16,6 +16,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+import static com.zhitar.topjavagraduation.util.ValidationUtil.checkNotFoundWithId;
+
 @Service
 public class UserService implements UserDetailsService {
 
@@ -26,7 +28,7 @@ public class UserService implements UserDetailsService {
     }
 
     public void deleteById(Long id) {
-        repository.deleteById(id);
+        checkNotFoundWithId(repository.delete(id) != 0, id);
     }
 
     public User save(User user) {
@@ -34,13 +36,14 @@ public class UserService implements UserDetailsService {
     }
 
     public User findById(Long id) {
-        return repository.findById(id).orElseThrow(() -> new NotFoundException("User with " + id + " not found"));
+        return repository.findById(id).orElseThrow(() -> new NotFoundException("User with id=" + id + " not found"));
     }
 
     public User findByEmail(String email) {
         return repository.findByEmail(email);
     }
 
+    @Transactional
     public User update(UserTo userTo) {
         User user = UserUtil.updateFromTo(findById(userTo.getId()), userTo);
         return repository.save(user);
